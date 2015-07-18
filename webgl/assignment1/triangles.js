@@ -5,9 +5,9 @@ var gl;
 
 var points = [];
 
-var NumTimesToSubdivide = 10;
+var NumTimesToSubdivide = 7;
 
-var RotationAngle = -37;
+var RotationAngle = 45;
 
 window.onload = function init()
 {
