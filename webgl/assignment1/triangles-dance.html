@@ -28,7 +28,7 @@ main()
 <script type="text/javascript" src="../Common/webgl-utils.js"></script>
 <script type="text/javascript" src="../Common/initShaders.js"></script>
 <script type="text/javascript" src="../Common/MV.js"></script>
-<script type="text/javascript" src="triangles.js"></script>
+<script type="application/javascript" src="triangles-dance.js"></script>
 </head>
 
 <body>
@@ -38,6 +38,24 @@ main()
             <li><a href="triangles-interactive.html">Interactive Version</a></li>
             <li><a href="triangles-dance.html">Dancing Version</a></li>
         </ul>
+    </div>
+    <div style="float:right">
+        <div>
+            <label>Number of subdivisions:</label><input type="text" id="number-subdivisions"/>
+        </div>
+        <div>
+            <label>Start Angle (in degrees, positive):</label><input type="text" id="start-twist-angle"/>
+        </div>
+        <div>
+            <label>End Angle (in degrees, LESS THAN start angle):</label><input type="text" id="end-twist-angle" />
+        </div>
+        <div>
+            <label>Speed:</label><input type="range" id="speed" min="1" max="10" oninput="updateSpeed(value)"/>
+        </div>
+        <div>
+            <button type="button" onclick="javascript:makeItDance()">Dance!</button>
+            <button type="button" onclick="javascript:stopDance()">Stop dancing :(</button>
+        </div>
     </div>
 <canvas id="gl-canvas" width="512" height="512">
 Oops ... your browser doesn't support the HTML5 canvas element
