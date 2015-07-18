@@ -2,34 +2,23 @@
 
 var canvas;
 var gl;
+var program;
+
+var defaultNumTimesToSubdivide = 6;
+var defaultTwistAngle = 45;
 
 var points = [];
 
-var NumTimesToSubdivide = 6;
-
-var RotationAngle = 45;
-
 window.onload = function init()
 {
+    document.querySelector("#number-subdivisions").value = defaultNumTimesToSubdivide;
+    document.querySelector("#twist-angle").value = defaultTwistAngle;
+
     canvas = document.getElementById( "gl-canvas" );
 
     gl = WebGLUtils.setupWebGL( canvas );
     if ( !gl ) { alert( "WebGL isn't available" ); }
 
-    //
-    //  Initialize our data for the Sierpinski Gasket
-    //
-
-    // First, initialize the corners of our gasket with three points.
-
-    var vertices = [
-        vec2( -0.75, -0.75 ),
-        vec2(  0,  0.75 ),
-        vec2(  0.75, -0.75 )
-    ];
-
-    divideTriangle( vertices[0], vertices[1], vertices[2],
-                    NumTimesToSubdivide, RotationAngle);
 
     //
     //  Configure WebGL
@@ -39,13 +28,36 @@ window.onload = function init()
 
     //  Load shaders and initialize attribute buffers
 
-    var program = initShaders( gl, "vertex-shader", "fragment-shader" );
+    program = initShaders( gl, "vertex-shader", "fragment-shader" );
     gl.useProgram( program );
+    var bufferId = gl.createBuffer();
+    gl.bindBuffer( gl.ARRAY_BUFFER, bufferId );
+
+    draw(defaultNumTimesToSubdivide, defaultTwistAngle);
+};
+
+
+function redraw() {
+  var numberSubdivisions = document.querySelector("#number-subdivisions").value;
+  var twistAngle = document.querySelector("#twist-angle").value;
+
+  points = [];
+  draw(numberSubdivisions, twistAngle);
+}
+
+function draw(numberOfSubdivisions, twistAngle) {
+  var vertices = [
+        vec2( -0.75, -0.75 ),
+        vec2(  0,  0.75 ),
+        vec2(  0.75, -0.75 )
+    ];
+
+    divideTriangle( vertices[0], vertices[1], vertices[2],
+                    numberOfSubdivisions, twistAngle);
 
     // Load the data into the GPU
 
-    var bufferId = gl.createBuffer();
-    gl.bindBuffer( gl.ARRAY_BUFFER, bufferId );
+
     gl.bufferData( gl.ARRAY_BUFFER, flatten(points), gl.STATIC_DRAW );
 
     // Associate out shader variables with our data buffer
@@ -55,7 +67,9 @@ window.onload = function init()
     gl.enableVertexAttribArray( vPosition );
 
     render();
-};
+}
+
+
 
 
 function rotate(vertex, angleDegree) {

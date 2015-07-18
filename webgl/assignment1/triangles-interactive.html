@@ -28,12 +28,23 @@ main()
 <script type="text/javascript" src="../Common/webgl-utils.js"></script>
 <script type="text/javascript" src="../Common/initShaders.js"></script>
 <script type="text/javascript" src="../Common/MV.js"></script>
-<script type="text/javascript" src="triangles.js"></script>
+<script type="application/javascript" src="triangles-interactive.js"></script>
 </head>
 
 <body>
     <div>
-        <a href="triangles-interactive.html">Interactive Version</a>
+        <a href="triangles.html">Static Version</a>
+    </div>
+    <div>
+        <div>
+            <label>Number of subdivisions</label><input type="text" id="number-subdivisions" value="6"/>
+        </div>
+        <div>
+            <label>Twist angle (in degrees)</label><input type="text" id="twist-angle" value="45"/>
+        </div>
+        <div>
+            <button type="button" onclick="javascript:redraw()">Update</button>
+        </div>
     </div>
 <canvas id="gl-canvas" width="512" height="512">
 Oops ... your browser doesn't support the HTML5 canvas element
