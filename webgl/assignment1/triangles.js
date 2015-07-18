@@ -5,9 +5,9 @@ var gl;
 
 var points = [];
 
-var NumTimesToSubdivide = 8;
+var NumTimesToSubdivide = 10;
 
-var RotationAngle = 30;
+var RotationAngle = -37;
 
 window.onload = function init()
 {
@@ -23,9 +23,9 @@ window.onload = function init()
     // First, initialize the corners of our gasket with three points.
 
     var vertices = [
-        vec2( -1, -1 ),
-        vec2(  0,  1 ),
-        vec2(  1, -1 )
+        vec2( -0.75, -0.75 ),
+        vec2(  0,  0.75 ),
+        vec2(  0.75, -0.75 )
     ];
 
     divideTriangle( vertices[0], vertices[1], vertices[2],
@@ -59,12 +59,12 @@ window.onload = function init()
 
 
 function rotate(vertex, angleDegree) {
-  var angle = radians(angleDegree);
+  var d = Math.sqrt( Math.pow(vertex[0], 2) + Math.pow(vertex[1], 2) )
+  var angle = d * radians(angleDegree);
 
   var x = vertex[0] * Math.cos(angle) - vertex[1] * Math.sin(angle);
   var y = vertex[0] * Math.sin(angle) + vertex[1] * Math.cos(angle);
-  var d = Math.sqrt( Math.pow(vertex[0], 2) + Math.pow(vertex[1], 2) )
-  return vec2(d * x, d * y);
+  return vec2(x, y);
 }
 
 function triangle( a, b, c, rotationAngle )
